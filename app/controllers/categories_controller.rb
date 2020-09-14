@@ -25,7 +25,12 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(params[:name])
     if @category.save
-      render json: {status: 201, data: @category}
+      @idea = Category_ideas.new(id: params[:id], body: params[:body])
+      if @idea.save
+        render json: { status: 201, data: @idea}
+      else
+        render json: {status: 422}
+      end
     else
       render json: {status: 422}
     end
