@@ -2,18 +2,29 @@ require 'rails_helper'
 
 RSpec.describe "Categories", type: :request do
 
+  describe "GET /index" do
+    before do
+      FactoryBot.create(:category)
+      FactoryBot.create(:idea, category: 1)
+    end
+    it "returns http 200" do
+      get "/categories"
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 ###########################################
-#index
+#show
 #  リクエスト
 #    * category_name(カテゴリー名):string
 #  レスポンス
 #    idea(id,body)category_nameで返してください
 ############################################
 
-  describe "GET /index" do
+  describe "GET /show" do
     before do
-      Factorybot.create(:category)
-      Factorybot.create(:idea)
+      FactoryBot.create(:category)
+      FactoryBot.create(:idea, category_id: category.id)
     end
     #it "returns http 200" do
       #et "/categories/index"
