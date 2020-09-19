@@ -4,8 +4,8 @@ RSpec.describe "Categories", type: :request do
 
   describe "GET /index" do
     before do
-      FactoryBot.create(:category)
-      FactoryBot.create(:idea, category: 1)
+      category = FactoryBot.create(:category)
+      idea = FactoryBot.create(:idea, category_id: category.id)
     end
     it "returns http 200" do
       get "/categories"
@@ -23,13 +23,13 @@ RSpec.describe "Categories", type: :request do
 
   describe "GET /show" do
     before do
-      FactoryBot.create(:category)
-      FactoryBot.create(:idea, category_id: category.id)
+      category = FactoryBot.create(:category)
+      idea = FactoryBot.create(:idea, category_id: category.id)
     end
-    #it "returns http 200" do
-      #et "/categories/index"
-      #expect(response).to have_http_status(200)
-    #end
+    it "returns http 200" do
+      get "/categories/show"
+      expect(response).to have_http_status(200)
+    end
   end
 
 ############################################
