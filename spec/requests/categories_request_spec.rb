@@ -21,14 +21,21 @@ RSpec.describe "Categories", type: :request do
 #    idea(id,body)category_nameで返してください
 ############################################
 
+
+#クエリを含んだurlで入る ex. request.env['PATH_INFO'] = '/hoge/?page=1'
+# get :index, params: {page: '1'}
   describe "GET /show" do
     before do
       category = FactoryBot.create(:category)
       idea = FactoryBot.create(:idea, category_id: category.id)
     end
-    it "returns http 200" do
-      get "/categories/show"
-      expect(response).to have_http_status(200)
+    it "returns http success" do
+      #get "/categories" #indexに入る
+      #redirect_to category_path(category_name: assigns(:category).name) #category_nameを通してshowアクションにリダイレクトする
+
+      request.env['PATH_INFO'] = 'categories/categories?name=MyString'      
+      get :show, params: {name: "MyString"}
+      expect(response).to have_http_status(:success)
     end
   end
 
@@ -47,12 +54,13 @@ RSpec.describe "Categories", type: :request do
 
   describe "POST /create" do
     it "returns http 200" do
-      #category = create(:category)
-      #expect(response.status).to eq(201)
+      #category = FactoryBot.create(category_name: params[:name])
+      #idea = FactoryBot(:idea, category_name: params[:name])
+      #expect(response.status).to eq(200)
     end
 
     it "returns http 422" do
-      #category = create(:category)
+      #category = FactoryBot.create(category_name: params[:name])
       #post categories_path, params: {}
       #expect(response.status).to eq(422)
     end
