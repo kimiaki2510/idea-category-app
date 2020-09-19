@@ -33,7 +33,7 @@ RSpec.describe "Categories", type: :request do
       #get "/categories" #indexに入る
       #redirect_to category_path(category_name: assigns(:category).name) #category_nameを通してshowアクションにリダイレクトする
 
-      request.env['PATH_INFO'] = 'categories/categories?name=MyString'      
+      request.env['PATH_INFO'] = 'categories/categories?name=MyString'
       get :show, params: {name: "MyString"}
       expect(response).to have_http_status(:success)
     end
