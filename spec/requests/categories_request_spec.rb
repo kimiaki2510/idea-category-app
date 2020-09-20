@@ -53,7 +53,14 @@ RSpec.describe "Categories", type: :request do
 ############################################
 
   describe "POST /create" do
+    before do
+      @params = FactoryBot.attributes_for(:category)
+    end
     it "returns http 200" do
+      #post categories_path, @params
+      #expect(response).to be_success
+      #expect(response.status).to eq 201
+
       #category = FactoryBot.create(category_name: params[:name])
       #idea = FactoryBot(:idea, category_name: params[:name])
       #expect(response.status).to eq(200)
