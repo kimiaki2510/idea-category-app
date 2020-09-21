@@ -22,10 +22,14 @@ class CategoriesController < ApplicationController
   def new
   end
 
+  def recieve_id
+    @cate_id = Category.find(params[:id])
+  end
+
   def create
     @category = Category.new(params[:name])
     if @category.save
-      @idea = Category_ideas.new(id: params[:id], body: params[:body])
+      @idea = Category_ideas.new(id: category.id, body: params[:body])      
       if @idea.save
         render json: { status: 201, data: @idea}
       else

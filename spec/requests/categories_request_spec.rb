@@ -41,29 +41,22 @@ RSpec.describe "Categories", type: :request do
 #    成功時 ステータスコード201を返してください。
 #    失敗時(バリデーションエラー) ステータスコード422を返してください。
 #
-#  createでcategory.nameを入力し、すでに登録されているもので「なければstatusコード202を返す
+#  createでcategory.nameを入力し、すでに登録されているものでなければstatusコード202を返す
 #  createでcategory.nameを入力し、すでに登録されていればstatusコード422を返す
 ############################################
 
   describe "POST /create" do
     before do
-      @params = FactoryBot.attributes_for(:category)
+      category = FactoryBot.attributes_for(:category)
+      idea = FactoryBot.attributes_for(:idea, category_id: category.id)
     end
-    it "returns http 200" do
-      #post categories_path, @params
-      #expect(response).to be_success
-      #expect(response.status).to eq 201
-
-      #category = FactoryBot.create(category_name: params[:name])
-      #idea = FactoryBot(:idea, category_name: params[:name])
-      #expect(response.status).to eq(200)
+    context "returns http 201" do
+      post "/categories", params: {name: 'Phone'}
+      expect(response.status).to eq 201
     end
-
-    it "returns http 422" do
-      #category = FactoryBot.create(category_name: params[:name])
-      #post categories_path, params: {}
-      #expect(response.status).to eq(422)
+    context "returns http 422" do
+      before {post '/categories', params: {name: 'アプリ'}}
+      expect(response.status).to eq 422
     end
   end
-
 end
