@@ -17,13 +17,6 @@ class IdeasController < ApplicationController
     else
       render json: {status: 422}
     end
-
-    @category = Category.new(category_params)
-    if @cstegory.save
-      render json: {status: 201, data: @category}
-    else
-      render json: {status: 422}
-    end
   end
 
   private
