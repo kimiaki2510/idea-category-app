@@ -20,12 +20,15 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @idea = Idea.new
-    @category = Category.new(category_params)
-    if @category.save
-      render json: {status: 201, data: @category}
+    unless @category.uniq?
+      #@category = Category.new(category_params)
+      if @category.save
+        render json: {status: 201, data: @category}
+      else
+        render json: {status: 422}
+      end
     else
-      render json: {status: 422}
+      render json: { data: @category }
     end
   end
 

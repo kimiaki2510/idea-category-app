@@ -5,13 +5,18 @@ class IdeasController < ApplicationController
   end
 
   def show
+    #nameで取得する必要がある
     @idea = Idea.find(id: params[:id])
     render json: { data: @idea }
   end
 
   def create
-    @idea = @category.ideas.build(idea_params)
-    @idea.category_id = @category.id
+    @category = Category.new
+    @idea = Idea.new(idea_params)
+    #category_idをcategory_nameにする
+    #@category = Category.new
+    #@idea = @category.ideas.build(idea_params)
+    #@idea.category_id = @category.id
     if @idea.save
       render json: {status: 201, data: @idea}
     else
