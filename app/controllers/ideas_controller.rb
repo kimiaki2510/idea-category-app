@@ -1,17 +1,17 @@
 class IdeasController < ApplicationController
   def index
+    @ideas = Idea.all
+    render json: { data: @ideas }
   end
 
   def show
-  end
-
-  def new
-    @idea = Idea.new
-    @category = Category.new
+    @idea = Idea.find(id: params[:id])
+    render json: { data: @idea }
   end
 
   def create
-    @idea = Idea.new(idea_params)
+    @idea = @category.ideas.build(idea_params)
+    @idea.category_id = @category.id
     if @idea.save
       render json: {status: 201, data: @idea}
     else
@@ -19,13 +19,13 @@ class IdeasController < ApplicationController
     end
   end
 
+  def destroy
+  end
+
   private
 
   def idea_params
-    params.require(:idea).permit(:body)
+    params.require(:idea).permit(:body, :category_id)
   end
 
-  def category_params
-    params.require(:category).permit(:name)
-  end
 end

@@ -19,37 +19,23 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def new
-  end
-
-  #def recieve_id
-    #@cate_id = Category.find(params[:id])
-  #end
-
   def create
-    @category = Category.find(name: params[:name])
+    @idea = Idea.new
+    @category = Category.new(category_params)
     if @category.save
-      #@idea = Category_ideas.find(id: category.id, body: params[:body])
-      #if @idea.save
-        #render json: { status: 201, data: @idea}
-      #else
-        #render json: {status: 422}
-      #end
       render json: {status: 201, data: @category}
     else
-      #@idea = Category_ideas.find(id: category.id, body: params[:body])
-      #if @idea.save
-        #render json: { status: 201, data: @idea}
-      #else
-        #render json: {status: 422}
-      #end
       render json: {status: 422}
     end
+  end
+
+  def destroy
   end
 
   private
 
   def category_params
-    params.require(:category).permit(:id,:name,:body)
+    params.require(:category).permit(:name)
   end
+
 end
