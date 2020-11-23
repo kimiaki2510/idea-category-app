@@ -1,4 +1,6 @@
 class Idea < ApplicationRecord
+  #assosiation
   belongs_to :category, dependent: :destroy
-  validates :body, presence: true
+  #validation
+  validates :body, presence: true  
 end

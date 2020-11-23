@@ -19,16 +19,18 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def new
+    @category = Category.new
+    @idea = @category.ideas.new
+  end
+
   def create
-    unless @category.uniq?
-      #@category = Category.new(category_params)
-      if @category.save
-        render json: {status: 201, data: @category}
-      else
-        render json: {status: 422}
-      end
+    @category = Category.new(category_params)
+    #@idea = @category.ideas.new
+    if @category.save
+      render json: {status: 201, data: @category}
     else
-      render json: { data: @category }
+      render json: {status: 422}
     end
   end
 
@@ -38,7 +40,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name, ideas_attributes: [:body, :_destroy, :id])
   end
 
 end

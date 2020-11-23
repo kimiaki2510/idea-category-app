@@ -1,5 +1,6 @@
 class IdeasController < ApplicationController
   def index
+    #@ideas = Idea.all
     @ideas = Idea.all
     render json: { data: @ideas }
   end
@@ -11,12 +12,7 @@ class IdeasController < ApplicationController
   end
 
   def create
-    @category = Category.new
     @idea = Idea.new(idea_params)
-    #category_idをcategory_nameにする
-    #@category = Category.new
-    #@idea = @category.ideas.build(idea_params)
-    #@idea.category_id = @category.id
     if @idea.save
       render json: {status: 201, data: @idea}
     else
